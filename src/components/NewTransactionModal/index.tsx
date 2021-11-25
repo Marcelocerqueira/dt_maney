@@ -1,10 +1,10 @@
+import { FormEvent, useState } from "react";
 import Modal from "react-modal";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
 import closeImg from "../../assets/close.svg";
 
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
-import { useState } from "react";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -15,7 +15,16 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) {
+  const [title, setTitle] = useState("");
+  const [value, setValue] = useState("0");
+  const [category, setCategory] = useState("");
+
   const [type, setType] = useState("deposit");
+
+  function handleCreateNewTrasaction(event: FormEvent) {
+    event.preventDefault();
+    console.log({ title, value, category, type });
+  }
 
   return (
     <Modal
@@ -32,12 +41,21 @@ export function NewTransactionModal({
         <img src={closeImg} alt="Fecha modal" />
       </button>
 
-      <Container>
+      <Container onSubmit={handleCreateNewTrasaction}>
         <h2>Cadastra transaçao</h2>
 
-        <input placeholder="Titulo" />
+        <input
+          placeholder="Titulo"
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
 
-        <input type="number" placeholder="Valor" />
+        <input
+          type="number"
+          placeholder="Valor"
+          value={value}
+          onChange={(event) => setValue(event.target.value)} //nesse caso estav dando erro quando colocava o number
+        />
 
         <TransactionTypeContainer>
           <RadioBox
@@ -65,7 +83,11 @@ export function NewTransactionModal({
           </RadioBox>
         </TransactionTypeContainer>
 
-        <input placeholder="Categoria" />
+        <input
+          placeholder="Categoria"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        />
 
         <button type="submit">Cadastrar</button>
       </Container>
