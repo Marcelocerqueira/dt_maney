@@ -3,10 +3,11 @@ import inconeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
 import totalImg from "../../assets/total.svg";
 import { TransactionContext } from "../../styles/TransactionContext";
+
 import { Container } from "./styles";
 
 export function Summary() {
-  const data = useContext(TransactionContext);
+  const transactions = useContext(TransactionContext);
 
   return (
     <Container>
