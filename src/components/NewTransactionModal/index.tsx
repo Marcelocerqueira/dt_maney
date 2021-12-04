@@ -6,7 +6,7 @@ import closeImg from "../../assets/close.svg";
 
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
 import { api } from "../../services/api";
-import { TransactionsContext } from "../../TransactionsContext";
+import { TransactionsContext } from "../../TransactionContext";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -17,10 +17,11 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: NewTransactionModalProps) {
-  const transactions = useContext(TransactionsContext);
+  const { createTransaction } = useContext(TransactionsContext);
+  // console.log(transactions);
 
   const [title, setTitle] = useState("");
-  const [value, setValue] = useState("0");
+  const [amount, setAmount] = useState("0");
   const [category, setCategory] = useState("");
 
   const [type, setType] = useState("deposit");
@@ -28,14 +29,12 @@ export function NewTransactionModal({
   function handleCreateNewTrasaction(event: FormEvent) {
     event.preventDefault();
 
-    const data = {
+    createTransaction({
       title,
-      value,
+      amount,
       category,
       type,
-    };
-
-    api.post("/transactions", data);
+    });
   }
 
   return (
@@ -65,8 +64,8 @@ export function NewTransactionModal({
         <input
           type="number"
           placeholder="Valor"
-          value={value}
-          onChange={(event) => setValue(event.target.value)} //nesse caso estav dando erro quando colocava o number
+          value={amount}
+          onChange={(event) => setAmount(Number(event.target.value)} //nesse caso estav dando erro quando colocava o number
         />
 
         <TransactionTypeContainer>
