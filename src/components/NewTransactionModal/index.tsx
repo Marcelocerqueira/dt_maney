@@ -6,7 +6,10 @@ import closeImg from "../../assets/close.svg";
 
 import { Container, TransactionTypeContainer, RadioBox } from "./styles";
 import { api } from "../../services/api";
-import { TransactionsContext } from "../../TransactionContext";
+import {
+  TransactionsContext,
+  TransactionsProvide,
+} from "../../TransactionContext";
 
 interface NewTransactionModalProps {
   isOpen: boolean;
@@ -23,7 +26,6 @@ export function NewTransactionModal({
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("0");
   const [category, setCategory] = useState("");
-
   const [type, setType] = useState("deposit");
 
   function handleCreateNewTrasaction(event: FormEvent) {
@@ -65,7 +67,7 @@ export function NewTransactionModal({
           type="number"
           placeholder="Valor"
           value={amount}
-          onChange={(event) => setAmount(Number(event.target.value)} //nesse caso estav dando erro quando colocava o number
+          onChange={(event) => setAmount(event.target.value)} //nesse caso estav dando erro quando colocava o number
         />
 
         <TransactionTypeContainer>
