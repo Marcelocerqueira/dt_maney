@@ -11,6 +11,7 @@ interface Transaction {
 }
 
 interface Transaction {
+  id: number;
   title: string;
   amount: number;
   type: string;
