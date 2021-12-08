@@ -1,6 +1,6 @@
 import { FormEvent, useState, useContext } from "react";
 import Modal from "react-modal";
-import { TransactionsContext } from "TransactionsContext";
+import { TransactionsContext } from "../../TransactionContext";
 
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
@@ -18,28 +18,24 @@ export function NewTransactionModal({
   onRequestClose,
 }: NewTransactionModalProps) {
   const { createTransaction } = useContext(TransactionsContext);
-  // console.log(transactions);
 
   const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("0");
+  const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
   const [type, setType] = useState("deposit");
 
-  function handleCreateNewTrasaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
-  }
-  createTransaction({
-    title,
-    amount,
-    category,
-    type,
-  });
-  setTitle("");
-  setAmount("0");
-  setCategory("");
-  setType("deposit");
-  onRequestClose();
 
+    await createTransaction({
+      title,
+      amount,
+      category,
+      type,
+    });
+
+    onRequestClose();
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -55,7 +51,7 @@ export function NewTransactionModal({
         <img src={closeImg} alt="Fecha modal" />
       </button>
 
-      <Container onSubmit={handleCreateNewTrasaction}>
+      <Container onSubmit={handleCreateNewTransaction}>
         <h2>Cadastra transaçao</h2>
 
         <input
@@ -68,7 +64,7 @@ export function NewTransactionModal({
           type="number"
           placeholder="Valor"
           value={amount}
-          onChange={(event) => setAmount(event.target.value)} //nesse caso estav dando erro quando colocava o number
+          onChange={(event) => setAmount(Number(event.target.value))} //nesse caso estav dando erro quando colocava o number
         />
 
         <TransactionTypeContainer>
