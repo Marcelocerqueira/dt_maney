@@ -13,7 +13,7 @@ createServer({
       transactions: [
         {
           id: 1,
-          title: "freelance",
+          title: "Freelance",
           type: "deposit",
           category: "dev",
           amount: 6000,
@@ -21,7 +21,7 @@ createServer({
         },
         {
           id: 2,
-          title: "alugel",
+          title: "Alugel",
           type: "deposit",
           category: "tec",
           amount: 1100,
